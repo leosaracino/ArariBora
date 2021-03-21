@@ -1,4 +1,4 @@
-# p03verdeuff
+# g03verdeuff
 Trabalho do grupo Verde para a disciplina de Laboratório de Programação de Dispositivos Móveis, Universidade Federal Fluminense, 2020.2.
 
 ## Como rodar a aplicação
