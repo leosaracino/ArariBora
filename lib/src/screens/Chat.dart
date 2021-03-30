@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'Settings.dart';
 import '../UserData.dart';
 import '../globals.dart' as globals;
@@ -110,9 +111,25 @@ class _ChatScreenState extends State<ChatScreen>{
               'contents': url
             });
           });
+
+
         });
       }
     });
+
+    // Busca os dados do usuário atual
+    db.collection('users').doc(auth.currentUser.uid).get().then((snapshot) {
+      var user = UserData(snapshot.data());
+
+      // Enviar push-notification
+    if(destinatary.sid != null){
+      OneSignal.shared.postNotification(OSCreateNotification(
+          playerIds: [destinatary.sid],
+          content: "imagem",
+          heading: user.name,
+          sendAfter: DateTime.now().add(Duration(milliseconds: 10))
+      ));
+    }});
   }
 
   /// Envia uma mensagem de texto.
@@ -123,6 +140,7 @@ class _ChatScreenState extends State<ChatScreen>{
     var time = Timestamp.now();
 
     var content = inputController.text;
+    setState(() { inputController.text = ''; });
 
     var data = {
       'suid': auth.currentUser.uid,
@@ -168,7 +186,20 @@ class _ChatScreenState extends State<ChatScreen>{
       });
     });
 
-    setState(() { inputController.text = ''; });
+    // Busca os dados do usuário atual
+    db.collection('users').doc(auth.currentUser.uid).get().then((snapshot) {
+      var user = UserData(snapshot.data());
+
+      // Enviar push-notification
+      if(destinatary.sid != null){
+        OneSignal.shared.postNotification(OSCreateNotification(
+            playerIds: [destinatary.sid],
+            content: content,
+            heading: user.name,
+            sendAfter: DateTime.now().add(Duration(milliseconds: 10))
+        ));
+      }
+    });
   }
 
   @override
@@ -270,6 +301,7 @@ class _ChatScreenState extends State<ChatScreen>{
     var inputBox =
     Container(
         alignment: Alignment.bottomCenter,
+        padding: EdgeInsets.fromLTRB(8.0, 8.0, 0.0, 4.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [

@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'Recovery.dart';
 import 'SignUp.dart';
 import 'Home.dart';
@@ -18,10 +20,14 @@ class _SignInScreenState extends State<SignInScreen>{
   /// Inicializa uma sessão de autenticação do Firebase Auth
   void signIn() async {
     var auth = FirebaseAuth.instance;
+    var db = FirebaseFirestore.instance;
 
     try {
       await auth.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
       if(auth.currentUser != null){
+        // overwrite OneSignal user
+        var status = await OneSignal.shared.getPermissionSubscriptionState();
+        db.collection('users').doc(auth.currentUser.uid).update({'sid': status.subscriptionStatus.userId});
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));
       }
     }
@@ -35,12 +41,22 @@ class _SignInScreenState extends State<SignInScreen>{
     }
   }
 
+  void checkForPersistance() async {
+    var auth = FirebaseAuth.instance;
+    var db = FirebaseFirestore.instance;
+
+    if (auth.currentUser != null) {
+      // overwrite OneSignal user
+      var status = await OneSignal.shared.getPermissionSubscriptionState();
+      db.collection('users').doc(auth.currentUser.uid).update({'sid': status.subscriptionStatus.userId});
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    if (FirebaseAuth.instance.currentUser != null) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));
-    }
+    checkForPersistance();
   }
 
   @override

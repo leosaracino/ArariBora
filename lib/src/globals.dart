@@ -84,6 +84,7 @@ Map<String, Color> colors = {
 //  Firebase Firestore User structure
 //
 // 'uid':   <String>    User's unique ID
+// 'sid':   <String>    OneSignal user's ID
 // 'url':   <String>    User's profile picture download URL <nullable>
 // 'lat':   <Number>    User's last known latitude
 // 'lng':   <Number>    User's last known longitude

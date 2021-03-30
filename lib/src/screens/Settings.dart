@@ -127,7 +127,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   /// Encerra a sessão de autenticação do Firebase Auth e retorna o aplicativo à tela de login.
   Future signOut() async {
-    await FirebaseAuth.instance.signOut();
+    var auth = FirebaseAuth.instance;
+    var db = FirebaseFirestore.instance;
+
+    // Clear OneSignal user id
+    await db.collection('users').doc(auth.currentUser.uid).update({'sid': null});
+
+
+    await auth.signOut();
     await Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => SignInScreen()), (Route<dynamic> route) => false);
   }
 

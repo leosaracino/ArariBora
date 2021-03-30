@@ -20,6 +20,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 ///
 class UserData{
   String uid;
+  String sid;
   String url;
   double lat;
   double lng;
@@ -29,6 +30,7 @@ class UserData{
 
   UserData(Map<String, dynamic> data){
     uid = data['uid'];
+    sid = data['sid'];
     url = data['url'];
     lat = data['lat'];
     lng = data['lng'];
@@ -40,6 +42,7 @@ class UserData{
   Map<String, dynamic> toMap(){
     return <String, dynamic>{
       'uid': uid,
+      'sid': sid,
       'url': url,
       'lat': lat,
       'lng': lng,
@@ -54,6 +57,7 @@ class UserData{
 //  Firebase Firestore User Structure
 //
 // 'uid':   [String]    User's unique ID
+// 'sid':   [String]    OneSignal's user ID
 // 'url':   [String]    User's profile picture download URL <nullable>
 // 'lat':   [Number]    User's last known latitude
 // 'lng':   [Number]    User's last known longitude

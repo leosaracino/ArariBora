@@ -104,8 +104,8 @@ class _HomeScreenState extends State<HomeScreen>{
       });
     });
 
-    // Tries to update the user's LatLng in Firestore every 10 seconds
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) { updateUserLatLng(); });
+    // Tries to update the user's LatLng in Firestore every 3 seconds
+    timer = Timer.periodic(Duration(seconds: 3), (Timer t) { updateUserLatLng(); });
   }
 
   @override

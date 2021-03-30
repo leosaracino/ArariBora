@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'Home.dart';
 import '../globals.dart' as globals;
 
@@ -33,9 +34,13 @@ class _SignUpScreenState extends State<SignUpScreen>{
       // Create Auth user
       await auth.createUserWithEmailAndPassword(email: email, password: password);
 
+      // Create OneSignal user
+      var status = await OneSignal.shared.getPermissionSubscriptionState();
+
       // Save user in Firebase Firestore (see globals for user structure)
       await  db.collection('users').doc(auth.currentUser.uid).set({
         'uid': auth.currentUser.uid,
+        'sid': status.subscriptionStatus.userId,
         'url': null,
         'lat': 0.0,
         'lng': 0.0,
