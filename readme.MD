@@ -7,6 +7,8 @@ Intale o APK em um dispositivo Android
 ## Tecnologias utilizadas
 [Flutter](https://flutter.dev/)
 
+[OneSignal](https://onesignal.com/)
+
 [flutter_map](https://github.com/fleaflet/flutter_map)
 
 [image_picker](https://pub.dev/packages/image_picker)
