@@ -7,9 +7,9 @@ import 'CreateGroup.dart';
 import '../UserData.dart';
 import '../globals.dart' as globals;
 
-/// Tela de contatos.
+/// Tela de seleção de contatos para criação de grupos.
 ///
-/// Mostra todos os usuários cadastrados.
+/// Mostra todos os demais usuários cadastrados.
 class SelectContactsScreen extends StatefulWidget{
   @override
   _SelectContactsScreenState createState() => _SelectContactsScreenState();
@@ -35,8 +35,8 @@ class _SelectContactsScreenState extends State<SelectContactsScreen>{
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-            leadingWidth: 32, // <-- Use this
-            centerTitle: false, // <-- and this
+            leadingWidth: 32,
+            centerTitle: false,
             title: Text('Contatos', style: globals.appBarTextStyle),
             actions: [
               Padding(
@@ -53,7 +53,6 @@ class _SelectContactsScreenState extends State<SelectContactsScreen>{
                   return ListView.builder(
                       itemCount: snapshot.data.length ,
                       itemBuilder: (context, index) {
-
                           var user = UserData(snapshot.data[index]);
                           return ListTile(
                               contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
@@ -70,35 +69,23 @@ class _SelectContactsScreenState extends State<SelectContactsScreen>{
                               globals.colors['lightgray'] : globals.colors['darkgray'],
                               onTap: () {
                                 if(_selected.contains(user.uid)){
-                                  _selected.remove(user.uid);
-                                  setState(() {});
-                                }else {
-                                  _selected.add(user.uid);
-                                  print(_selected.runtimeType);
-                                  setState(() {});
+                                  setState(() {
+                                    _selected.remove(user.uid);
+                                  });
                                 }
-                              });
-                        });
+                                else {
+                                  print(_selected.runtimeType);
+                                  setState(() {
+                                    _selected.add(user.uid);
+                                  });
+                                }});});
                   break;
                 default:
                   return Center(child: CircularProgressIndicator(backgroundColor: Color(0xFF3F9FFF)));
                   break;}}),
         floatingActionButton: FloatingActionButton(
           backgroundColor: globals.colors['blue'],
-          child: Icon(Icons.arrow_forward_outlined),
+          child: Icon(Icons.arrow_forward_outlined, size: 28),
           onPressed: () {
           Navigator.of(context).pop();
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>CreateGroupScreen(_selected)));
-        },),
-
-        /*bottomSheet:SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      child: Text("Criar grupo"),
-                      onPressed: (){
-                        print("criou");
-                      },
-                    ))*/
-                );}}
-
-
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>CreateGroupScreen(_selected)));}));}}

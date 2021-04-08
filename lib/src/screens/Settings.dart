@@ -24,7 +24,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   /// Operação assíncrona que busca os dados do usuário no Firebase antes de construir este widget.
   Future initializer;
 
-  /// Atualiza a imagem de peril do usuário na Cloud Storage e no Firebase.
+  /// Atualiza a imagem de perfil do usuário na Cloud Storage e no Firebase.
   Future setImage(String source) async {
     var db = FirebaseFirestore.instance;
     var st = FirebaseStorage.instance;

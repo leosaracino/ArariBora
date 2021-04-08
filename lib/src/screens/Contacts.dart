@@ -10,7 +10,7 @@ import '../globals.dart' as globals;
 
 /// Tela de contatos.
 ///
-/// Mostra todos os usuários cadastrados.
+/// Mostra todos os demais usuários cadastrados.
 class ContactsScreen extends StatefulWidget{
   @override
   _ContactsScreenState createState() => _ContactsScreenState();
@@ -35,8 +35,8 @@ class _ContactsScreenState extends State<ContactsScreen>{
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-            leadingWidth: 32, // <-- Use this
-            centerTitle: false, // <-- and this
+            leadingWidth: 32,
+            centerTitle: false,
             title: Text('Contatos', style: globals.appBarTextStyle),
             actions: [
               Padding(
@@ -58,7 +58,7 @@ class _ContactsScreenState extends State<ContactsScreen>{
                               contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                               leading: CircleAvatar(
                                   radius: 24,
-                                  child: Icon(Icons.add)),
+                                  child: Icon(Icons.add, size: 28)),
                               title: Text(
                                   "Criar grupo",
                                   style: globals.buttonTextStyle),

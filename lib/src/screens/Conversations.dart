@@ -112,16 +112,16 @@ class _ConversationsScreenState extends State<ConversationsScreen>{
 
     var contactsButton =
     Container(
-      alignment: Alignment.centerRight,
-      padding: EdgeInsets.all(16.0),
-      child: ElevatedButton(
-          style: ButtonStyle(
-              padding: MaterialStateProperty.all(EdgeInsets.zero),
-              //fixedSize: MaterialStateProperty.all(Size.fromRadius(28.0)),
-              backgroundColor: MaterialStateProperty.all(Color(0xFF3F9FFF)),
-              shape: MaterialStateProperty.all(CircleBorder())),
-          onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => ContactsScreen())); },
-          child: Icon(Icons.person, size: 36.0)));
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.all(16.0),
+        child: ElevatedButton(
+            style: ButtonStyle(
+                padding: MaterialStateProperty.all(EdgeInsets.zero),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(28.0))),
+                minimumSize: MaterialStateProperty.all(Size(56.0, 56.0)),
+                backgroundColor: MaterialStateProperty.all(Color(0xFF3F9FFF))),
+            onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => ContactsScreen())); },
+            child: Icon(Icons.person, size: 36.0)));
 
     return Scaffold(
         resizeToAvoidBottomInset: true,
