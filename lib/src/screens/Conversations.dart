@@ -117,9 +117,9 @@ class _ConversationsScreenState extends State<ConversationsScreen>{
       child: ElevatedButton(
           style: ButtonStyle(
               padding: MaterialStateProperty.all(EdgeInsets.zero),
-              fixedSize: MaterialStateProperty.all(Size.fromRadius(28.0)),
-              backgroundColor: MaterialStateProperty.all(Color(0xFF3F9FFF)),
-              shape: MaterialStateProperty.all(CircleBorder())),
+              //fixedSize: MaterialStateProperty.all(Size.fromRadius(28.0)),
+              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(28.0))),
+              backgroundColor: MaterialStateProperty.all(Color(0xFF3F9FFF))),
           onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => ContactsScreen())); },
           child: Icon(Icons.person, size: 36.0)));
 
