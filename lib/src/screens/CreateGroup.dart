@@ -69,13 +69,15 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
       "name" : name,
       "users": FieldValue.arrayUnion(users),
     }).then((doc) async {
+      // Store group uid in Firebase Firestore
+      await db.collection('groups').doc(doc.id).update({'uid': doc.id});
       // Store image in Cloud Storage
       var path = st.ref().child('profile').child('groups').child(doc.id + '.jpg');
       await path.putFile(imageFile);
       var url = await path.getDownloadURL();
 
       // Finish storing group data in Firebase Firestore
-      await db.collection('groups').doc(doc.id).update({'uid': doc.id, 'url': url});
+      await db.collection('groups').doc(doc.id).update({ 'url': url});
     });
 
     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomeScreen()), (Route<dynamic> route) => false);

@@ -7,11 +7,12 @@ import 'Settings.dart';
 import 'Contacts.dart';
 import 'Chat.dart';
 import '../UserData.dart';
+import '../GroupData.dart';
 import '../globals.dart' as globals;
 
 /// Tela de conversas.
 ///
-/// Mostra os usuários com quem o usuário atual já trocou mensagens e a mensagem mais recentre entre eles.
+/// Mostra os usuários e grupos com quem o usuário atual já trocou mensagens e a mensagem mais recentre entre eles.
 class ConversationsScreen extends StatefulWidget{
   @override
   _ConversationsScreenState createState() => _ConversationsScreenState();
@@ -20,6 +21,7 @@ class ConversationsScreen extends StatefulWidget{
 class _ConversationsScreenState extends State<ConversationsScreen>{
   final scrollController = ScrollController();
   Stream stream;
+
 
   @override
   void initState() {
@@ -60,51 +62,106 @@ class _ConversationsScreenState extends State<ConversationsScreen>{
                   itemCount: (querySnapshot.data).docs.length,
                   itemBuilder: (context, index) {
                     var message = (querySnapshot.data).docs[index].data();
-                    print(message['uid']);
-                    return Align(
-                      alignment: Alignment.centerLeft,
-                      child: FutureBuilder<DocumentSnapshot>(
-                          future: db.collection('users').doc(message['uid']).get(),
-                          builder: (context, documentSnapshot) {
-                            // FUTURE BUILDER STRATEGY
-                            switch(documentSnapshot.connectionState){
-                              case ConnectionState.waiting:
-                                return Container(
-                                    height: 64,
-                                    alignment: Alignment.centerLeft,
-                                    padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                                    child: CircularProgressIndicator(backgroundColor: Color(0xFF3F9FFF)));
-                                break;
-                              case ConnectionState.active:
-                              case ConnectionState.done:
-                                var user = UserData(documentSnapshot.data.data());
-                                return ListTile(
-                                    contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                                    leading: CircleAvatar(
-                                        radius: 24,
-                                        backgroundImage: user.url == null
-                                            ? null
-                                            : NetworkImage(user.url)),
-                                    title: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                              user.name,
-                                              style: globals.buttonTextStyle),
-                                          message['type'] == 'text'
-                                            ? Text(
-                                              message['contents'],
-                                              style: globals.inputHintTextStyle)
-                                            : Row(
+                    //print(message['uid']);
+                        return Align(
+                          alignment: Alignment.centerLeft,
+                          child: FutureBuilder<List<DocumentSnapshot>>(
+                              future: Future.wait([db.collection('users').doc(message['uid']).get(),db.collection('groups').doc(message['uid']).get()]),
+                              builder: (context, documentSnapshot) {
+                                // FUTURE BUILDER STRATEGY
+                                switch(documentSnapshot.connectionState){
+                                  case ConnectionState.waiting:
+                                    return Container(
+                                        height: 64,
+                                        alignment: Alignment.centerLeft,
+                                        padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                                        child: CircularProgressIndicator(backgroundColor: Color(0xFF3F9FFF)));
+                                    break;
+                                  case ConnectionState.active:
+                                  case ConnectionState.done:
+                                    print("oi");
+                                    var user;
+                                    try {
+                                       user = UserData(
+                                          documentSnapshot.data[0].data());
+                                    }catch(e){
+                                       user = null;
+                                    }
+                                    if (user != null){
+                                      return ListTile(
+                                          contentPadding: EdgeInsets.fromLTRB(
+                                              16, 8, 16, 8),
+                                          leading: CircleAvatar(
+                                              radius: 24,
+                                              backgroundImage: user.url == null
+                                                  ? null
+                                                  : NetworkImage(user.url)),
+                                          title: Column(
+                                              crossAxisAlignment: CrossAxisAlignment
+                                                  .start,
                                               children: [
-                                                Icon(Icons.photo, color: Colors.white, size: 16.0),
-                                                SizedBox(width: 8.0),
                                                 Text(
-                                                    'Imagem',
-                                                    style: globals.inputHintTextStyle)])]),
-                                    onTap: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatScreen(user))); });
-                              default:
-                                return Container();}}),);});
+                                                    user.name,
+                                                    style: globals.buttonTextStyle),
+                                                message['type'] == 'text'
+                                                    ? Text(
+                                                    message['contents'],
+                                                    style: globals
+                                                        .inputHintTextStyle)
+                                                    : Row(
+                                                    children: [
+                                                      Icon(Icons.photo,
+                                                          color: Colors.white,
+                                                          size: 16.0),
+                                                      SizedBox(width: 8.0),
+                                                      Text(
+                                                          'Imagem',
+                                                          style: globals
+                                                              .inputHintTextStyle)
+                                                    ])
+                                              ]),
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ChatScreen(user)));
+                                          });
+
+                                    }
+                                    var group = GroupData(documentSnapshot.data[1].data());
+
+
+                                    return ListTile(
+                                      contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                                      leading: CircleAvatar(
+                                          radius: 24,
+                                          backgroundImage: group.url == null
+                                              ? null
+                                              : NetworkImage(group.url)),
+                                      title: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                                group.name,
+                                                style: globals.buttonTextStyle),
+                                            message['type'] == 'text'
+                                                ? Text(
+                                                message['contents'],
+                                                style: globals.inputHintTextStyle)
+                                                : Row(
+                                                children: [
+                                                  Icon(Icons.photo, color: Colors.white, size: 16.0),
+                                                  SizedBox(width: 8.0),
+                                                  Text(
+                                                      'Imagem',
+                                                      style: globals.inputHintTextStyle)])]),
+                                      //onTap: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatScreen(user)));}
+                                    );
+
+                                  default:
+                                    return Container();}}),);
+
+                              });
               break;
             default:
               return Container();
