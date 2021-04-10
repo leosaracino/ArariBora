@@ -23,7 +23,7 @@ class _SignInScreenState extends State<SignInScreen>{
     var db = FirebaseFirestore.instance;
 
     try {
-      await auth.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
+      await auth.signInWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text);
       if(auth.currentUser != null){
         // overwrite OneSignal user
         var status = await OneSignal.shared.getPermissionSubscriptionState();
@@ -75,7 +75,7 @@ class _SignInScreenState extends State<SignInScreen>{
           appBar: AppBar(
               centerTitle: false,
               leadingWidth: 32,
-              title: Text('Grupo 03 - Verde', style: globals.appBarTextStyle)),
+              title: Text('ArariBora', style: globals.appBarTextStyle)),
           body: Center(
               child: SingleChildScrollView(
                 child: Padding(

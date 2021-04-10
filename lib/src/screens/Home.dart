@@ -149,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen>{
               leadingWidth: 0,
               centerTitle: false,
               leading: Container(),
-              title: Text('Grupo 03 - Verde', style: globals.appBarTextStyle),
+              title: Text('ArariBora', style: globals.appBarTextStyle),
               actions: [
                 Padding(
                   padding: EdgeInsets.only(right: 16.0),

@@ -88,7 +88,7 @@ class _SignUpScreenState extends State<SignUpScreen>{
       appBar: AppBar(
           centerTitle: false,
           leadingWidth: 32,
-          title: Text('Grupo 03 - Verde', style: globals.appBarTextStyle)),
+          title: Text('ArariBora', style: globals.appBarTextStyle)),
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
