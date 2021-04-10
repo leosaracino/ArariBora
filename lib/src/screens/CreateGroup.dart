@@ -29,7 +29,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   /// Operação assíncrona que busca os dados do usuário no Firebase antes de construir este widget.
   Future initializer;
 
-  /// Atualiza a imagem de perfil do grupo na Cloud Storage e no Firebase.
+  /// Cria um arquivo local com a imagem do grupo.
   Future setImage(String source) async {
     if(source == 'remove'){
       if(imageFile != null){
@@ -64,20 +64,31 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
 
     users.add(auth.currentUser.uid);
 
-    // Begin storing group data in Firebase Firestore and get access to it's ID
+    // Store group data in Firebase Firestore and it's image in Cloud Storage
+    String groupUID;
     await db.collection("groups").add({
       "name" : name,
       "users": FieldValue.arrayUnion(users),
     }).then((doc) async {
-      // Store group uid in Firebase Firestore
-      await db.collection('groups').doc(doc.id).update({'uid': doc.id});
-      // Store image in Cloud Storage
-      var path = st.ref().child('profile').child('groups').child(doc.id + '.jpg');
+      groupUID = doc.id;
+
+      var path = st.ref().child('profile').child('groups').child(groupUID + '.jpg');
       await path.putFile(imageFile);
       var url = await path.getDownloadURL();
 
-      // Finish storing group data in Firebase Firestore
-      await db.collection('groups').doc(doc.id).update({ 'url': url});
+      // Update group data after generating it's UID
+      db.collection('groups').doc(groupUID).update({'uid': groupUID});
+      db.collection('groups').doc(groupUID).update({'url': url});
+
+      // Create a last_message entry for every user in the group
+      var time = Timestamp.now();
+      users.forEach((user) {
+        db.collection('conversations')
+          .doc(user)
+          .collection('last_message')
+          .doc(groupUID)
+          .set({'uid': groupUID, 'time': time, 'type': 'text', 'contents': ''});
+      });
     });
 
     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomeScreen()), (Route<dynamic> route) => false);

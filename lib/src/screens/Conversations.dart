@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'GroupChat.dart';
 import 'Settings.dart';
 import 'Contacts.dart';
 import 'Chat.dart';
@@ -22,7 +23,6 @@ class _ConversationsScreenState extends State<ConversationsScreen>{
   final scrollController = ScrollController();
   Stream stream;
 
-
   @override
   void initState() {
     super.initState();
@@ -31,9 +31,9 @@ class _ConversationsScreenState extends State<ConversationsScreen>{
     var db = FirebaseFirestore.instance;
 
     stream = db.collection('conversations')
-               .doc(auth.currentUser.uid)
-               .collection('last_message')
-               .snapshots();
+        .doc(auth.currentUser.uid)
+        .collection('last_message')
+        .snapshots();
   }
 
   @override
@@ -62,106 +62,73 @@ class _ConversationsScreenState extends State<ConversationsScreen>{
                   itemCount: (querySnapshot.data).docs.length,
                   itemBuilder: (context, index) {
                     var message = (querySnapshot.data).docs[index].data();
-                    //print(message['uid']);
-                        return Align(
-                          alignment: Alignment.centerLeft,
-                          child: FutureBuilder<List<DocumentSnapshot>>(
-                              future: Future.wait([db.collection('users').doc(message['uid']).get(),db.collection('groups').doc(message['uid']).get()]),
-                              builder: (context, documentSnapshot) {
-                                // FUTURE BUILDER STRATEGY
-                                switch(documentSnapshot.connectionState){
-                                  case ConnectionState.waiting:
-                                    return Container(
-                                        height: 64,
-                                        alignment: Alignment.centerLeft,
-                                        padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                                        child: CircularProgressIndicator(backgroundColor: Color(0xFF3F9FFF)));
-                                    break;
-                                  case ConnectionState.active:
-                                  case ConnectionState.done:
-                                    print("oi");
-                                    var user;
-                                    try {
-                                       user = UserData(
-                                          documentSnapshot.data[0].data());
+                    return Align(
+                        alignment: Alignment.centerLeft,
+                        child: FutureBuilder<List<DocumentSnapshot>>(
+                            future: Future.wait([db.collection('users').doc(message['uid']).get(), db.collection('groups').doc(message['uid']).get()]),
+                            builder: (context, documentSnapshot) {
+                              // FUTURE BUILDER STRATEGY
+                              switch(documentSnapshot.connectionState){
+                                case ConnectionState.waiting:
+                                  return Container(
+                                      height: 64,
+                                      alignment: Alignment.centerLeft,
+                                      padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                                      child: CircularProgressIndicator(backgroundColor: Color(0xFF3F9FFF)));
+                                  break;
+                                case ConnectionState.active:
+                                case ConnectionState.done:
+                                  var data;
+                                  try {
+                                    // Data fits a user
+                                    data = UserData(documentSnapshot.data[0].data());
+                                  }catch(e){
+                                    try{
+                                      // Data fits a group
+                                      data = GroupData(documentSnapshot.data[1].data());
                                     }catch(e){
-                                       user = null;
+                                      // Data fits nothing
+                                      throw new Exception('Conversations screen data fits neither user or group!');
                                     }
-                                    if (user != null){
-                                      return ListTile(
-                                          contentPadding: EdgeInsets.fromLTRB(
-                                              16, 8, 16, 8),
-                                          leading: CircleAvatar(
-                                              radius: 24,
-                                              backgroundImage: user.url == null
-                                                  ? null
-                                                  : NetworkImage(user.url)),
-                                          title: Column(
-                                              crossAxisAlignment: CrossAxisAlignment
-                                                  .start,
-                                              children: [
-                                                Text(
-                                                    user.name,
-                                                    style: globals.buttonTextStyle),
-                                                message['type'] == 'text'
-                                                    ? Text(
-                                                    message['contents'],
-                                                    style: globals
-                                                        .inputHintTextStyle)
-                                                    : Row(
-                                                    children: [
-                                                      Icon(Icons.photo,
-                                                          color: Colors.white,
-                                                          size: 16.0),
-                                                      SizedBox(width: 8.0),
-                                                      Text(
-                                                          'Imagem',
-                                                          style: globals
-                                                              .inputHintTextStyle)
-                                                    ])
-                                              ]),
-                                          onTap: () {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ChatScreen(user)));
-                                          });
+                                  }
 
-                                    }
-                                    var group = GroupData(documentSnapshot.data[1].data());
-
-
-                                    return ListTile(
-                                      contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                                  return ListTile(
+                                      contentPadding: EdgeInsets.fromLTRB(
+                                          16, 8, 16, 8),
                                       leading: CircleAvatar(
                                           radius: 24,
-                                          backgroundImage: group.url == null
+                                          backgroundImage: data.url == null
                                               ? null
-                                              : NetworkImage(group.url)),
+                                              : NetworkImage(data.url)),
                                       title: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment
+                                              .start,
                                           children: [
                                             Text(
-                                                group.name,
+                                                data.name,
                                                 style: globals.buttonTextStyle),
                                             message['type'] == 'text'
                                                 ? Text(
                                                 message['contents'],
-                                                style: globals.inputHintTextStyle)
+                                                style: globals
+                                                    .inputHintTextStyle)
                                                 : Row(
                                                 children: [
-                                                  Icon(Icons.photo, color: Colors.white, size: 16.0),
+                                                  Icon(Icons.photo,
+                                                      color: Colors.white,
+                                                      size: 16.0),
                                                   SizedBox(width: 8.0),
                                                   Text(
                                                       'Imagem',
                                                       style: globals.inputHintTextStyle)])]),
-                                      //onTap: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatScreen(user)));}
-                                    );
-
-                                  default:
-                                    return Container();}}),);
-
-                              });
+                                      onTap: () {
+                                        if(data.runtimeType == UserData)
+                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatScreen(data)));
+                                        if(data.runtimeType == GroupData)
+                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => GroupChatScreen(data)));
+                                      });
+                                default:
+                                  return Container();}}));});
               break;
             default:
               return Container();
@@ -193,9 +160,9 @@ class _ConversationsScreenState extends State<ConversationsScreen>{
                       icon: Icon(Icons.menu_rounded, size: 36.0),
                       onPressed: (){ Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen())); }))]),
         body: SafeArea(
-          child: Column(
-              children: [
-                Expanded(child: streamBuilder),
-                contactsButton])));}}
+            child: Column(
+                children: [
+                  Expanded(child: streamBuilder),
+                  contactsButton])));}}
 
 

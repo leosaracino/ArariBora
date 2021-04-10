@@ -317,7 +317,7 @@ class _ChatScreenState extends State<ChatScreen>{
                       children: [
                         Flexible(
                           child: TextField(
-                              autofocus: true,
+                              autofocus: false,
                               maxLines: null,
                               controller: inputController,
                               style: globals.chatInputTextStyle,
