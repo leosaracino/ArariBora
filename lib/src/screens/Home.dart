@@ -23,6 +23,9 @@ class _HomeScreenState extends State<HomeScreen>{
   final storedUsers = <String, UserData>{};
   final markers = <String, Marker>{};
   Timer timer;
+  double lat = -22.90614915134549, lng = -43.13322913488855;
+  final MapController mapController = MapController();
+
 
   /// Atualiza os campos de latitude e longitude do usuário no Firestore
   Future updateUserLatLng () async {
@@ -104,6 +107,10 @@ class _HomeScreenState extends State<HomeScreen>{
       });
     });
 
+    Geolocator.getLastKnownPosition().then((value) {
+      mapController.move(LatLng(value.latitude, value.longitude), mapController.zoom);
+    });
+
     // Tries to update the user's LatLng in Firestore every 3 seconds
     timer = Timer.periodic(Duration(seconds: 3), (Timer t) { updateUserLatLng(); });
   }
@@ -115,18 +122,37 @@ class _HomeScreenState extends State<HomeScreen>{
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
+    var auth = FirebaseAuth.instance;
+    var db = FirebaseFirestore.instance;
+
+    var centerButton = ElevatedButton(
+        style: ButtonStyle(
+            padding: MaterialStateProperty.all(EdgeInsets.all(4)),
+            backgroundColor: MaterialStateProperty.all(Color(0xFF3F9FFF)),
+            shape: MaterialStateProperty.all(CircleBorder())
+        ),
+        onPressed: () {
+          Geolocator.getLastKnownPosition().then((value) {
+            mapController.move(LatLng(value.latitude, value.longitude), mapController.zoom);
+          });
+        },
+        child: Icon(Icons.gps_fixed, size: 20.0));
+
     var map =
     FlutterMap(
-      options: MapOptions(
-        center: LatLng(-22.90614915134549, -43.13322913488855),
-        zoom: 16.0),
-      layers: [
-        TileLayerOptions(
-            urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            subdomains: ['a', 'b', 'c']),
-        MarkerLayerOptions(
-            markers: markers.values.toList())]);
+        mapController: mapController,
+        options: MapOptions(
+            center: LatLng(lat, lng),
+            minZoom: 13.0,
+            maxZoom: 17.0,
+            zoom: 16.0),
+        layers: [
+          TileLayerOptions(
+              urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+              subdomains: ['a', 'b', 'c']),
+          MarkerLayerOptions(
+              markers: markers.values.toList())]);
 
     var conversationsButton =
     Align(
@@ -157,6 +183,9 @@ class _HomeScreenState extends State<HomeScreen>{
                     icon: Icon(Icons.menu_rounded, size: 36.0),
                     onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen())); }))]),
           body: Stack(
-              children:[
-                map,
-                conversationsButton])));}}
+          children:[
+            map,
+            conversationsButton,
+            centerButton
+          ]
+      )));}}

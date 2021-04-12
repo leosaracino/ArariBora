@@ -14,8 +14,8 @@ class SignInScreen extends StatefulWidget{
 }
 
 class _SignInScreenState extends State<SignInScreen>{
-  final emailController = TextEditingController(text: '');
-  final passwordController = TextEditingController(text: '');
+  final emailController = TextEditingController(text: 'tiagomlbrasil@gmail.com');
+  final passwordController = TextEditingController(text: '123456');
 
   /// Inicializa uma sessão de autenticação do Firebase Auth
   void signIn() async {
