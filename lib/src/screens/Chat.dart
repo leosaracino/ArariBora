@@ -37,13 +37,12 @@ class ChatScreen extends StatefulWidget{
 
 class _ChatScreenState extends State<ChatScreen>{
   _ChatScreenState(this.destinatary);
-  UserData destinatary;
+  final UserData destinatary;
 
   final inputController = TextEditingController(text: '');
   final scrollController = ScrollController();
   bool uploadingFile = false;
   Stream<QuerySnapshot> stream;
-
 
   /// Envia uma mensagem contendo uma imagem.
   Future sendImage() async {
@@ -261,7 +260,7 @@ class _ChatScreenState extends State<ChatScreen>{
                                         padding: EdgeInsets.all(12.0),
                                         decoration: message['suid'] == auth.currentUser.uid
                                             ? BoxDecoration(color: Color(0xFF3F9FFF), borderRadius: BorderRadius.only(topLeft: radius, bottomLeft: radius, topRight: radius))
-                                            : BoxDecoration(color: Color(0xFF3F9FFF), borderRadius: BorderRadius.only(bottomLeft: radius, bottomRight: radius, topRight: radius)),
+                                            : BoxDecoration(color: Color(0xFF262D31), borderRadius: BorderRadius.only(bottomLeft: radius, bottomRight: radius, topRight: radius)),
                                         child:
                                         Row(
                                             children: [

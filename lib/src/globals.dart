@@ -80,29 +80,3 @@ Map<String, Color> colors = {
   'darkgray': Color(0xFF1F1F1F),
   'lightgray': Color(0xFF7F7F7F)
 };
-
-//  Firebase Firestore User structure
-//
-// 'uid':   <String>    User's unique ID
-// 'sid':   <String>    OneSignal user's ID
-// 'url':   <String>    User's profile picture download URL <nullable>
-// 'lat':   <Number>    User's last known latitude
-// 'lng':   <Number>    User's last known longitude
-// 'name':  <Number>    User's display name
-// 'time':  <Timestamp> User's last location update timestamp
-// 'email': <String>    User's email address
-//
-//  Firebase Firestore Message structure
-//
-// 'suid':     <String>    Sender's unique ID
-// 'ruid':     <String>    Receiver's unique ID
-// 'time':     <Timestamp> Message's timestamp
-// 'type':     <String>    Type of message <'text','image'>
-// 'contents': <String>    Contents of the message <text, image url>
-//
-//  Firebase Firestore Last Message structure
-//
-//  'uid':      <String>    "Other" user's Unique ID
-//  'time':     <Timestamp> Message's timestamp
-//  'type':     <String>    Type of message <'text', 'image'>
-//  'contents': <String>    The message's content

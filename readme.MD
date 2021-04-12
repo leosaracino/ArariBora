@@ -14,7 +14,7 @@ Intale o APK em um dispositivo Android
 [image_picker](https://pub.dev/packages/image_picker)
 
 ## Contribuição
-Fabio Correa
+[Fabio Correa](https://github.com/Fabioscpuf)
 
 [Gabriela Pinheiro](https://github.com/GabrielaPC) - Vice-chefe
 

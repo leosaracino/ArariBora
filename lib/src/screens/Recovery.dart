@@ -32,7 +32,7 @@ class _RecoveryScreenState extends State<RecoveryScreen>{
         appBar: AppBar(
             centerTitle: false,
             leadingWidth: 32,
-            title: Text('ArariBora', style: globals.appBarTextStyle)),
+            title: Text('Recuperação de senha', style: globals.appBarTextStyle)),
         body: Center(
             child: SingleChildScrollView(
                 child: Padding(

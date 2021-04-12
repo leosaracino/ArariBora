@@ -26,9 +26,6 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   final picker = ImagePicker();
   final nameController = TextEditingController(text: '');
 
-  /// Operação assíncrona que busca os dados do usuário no Firebase antes de construir este widget.
-  Future initializer;
-
   /// Cria um arquivo local com a imagem do grupo.
   Future setImage(String source) async {
     if(source == 'remove'){

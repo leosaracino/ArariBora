@@ -26,7 +26,6 @@ class _HomeScreenState extends State<HomeScreen>{
   double lat = -22.90614915134549, lng = -43.13322913488855;
   final MapController mapController = MapController();
 
-
   /// Atualiza os campos de latitude e longitude do usuário no Firestore
   Future updateUserLatLng () async {
     var auth = FirebaseAuth.instance;
@@ -175,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen>{
               leadingWidth: 0,
               centerTitle: false,
               leading: Container(),
-              title: Text('ArariBora', style: globals.appBarTextStyle),
+              title: Text('Araribora', style: globals.appBarTextStyle),
               actions: [
                 Padding(
                   padding: EdgeInsets.only(right: 16.0),

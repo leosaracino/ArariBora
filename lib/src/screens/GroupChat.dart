@@ -242,7 +242,7 @@ class _GroupChatScreenState extends State<GroupChatScreen>{
                                           padding: EdgeInsets.all(12.0),
                                           decoration: message['suid'] == auth.currentUser.uid
                                               ? BoxDecoration(color: Color(0xFF3F9FFF), borderRadius: BorderRadius.only(topLeft: radius, bottomLeft: radius, topRight: radius))
-                                              : BoxDecoration(color: Color(0xFF3F9FFF), borderRadius: BorderRadius.only(bottomLeft: radius, bottomRight: radius, topRight: radius)),
+                                              : BoxDecoration(color: Color(0xFF262D31), borderRadius: BorderRadius.only(bottomLeft: radius, bottomRight: radius, topRight: radius)),
                                           child:
                                           Row(
                                               children: [

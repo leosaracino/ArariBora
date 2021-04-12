@@ -7,6 +7,7 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 // TODO: Trocar o SHA-1 DEBUG para RELEASE https://developers.google.com/maps/documentation/android-sdk/get-api-key
 
+/// Inicializa o serviço OneSignal.
 Future initializeOneSignal() async {
   //Remove this method to stop OneSignal Debugging
   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
@@ -19,21 +20,11 @@ Future initializeOneSignal() async {
   await OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: true);
 }
 
-
 /// Ponto de entrada do programa.
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await initializeOneSignal();
-
-  var auth = FirebaseAuth.instance;
-  var db = FirebaseFirestore.instance;
-
-  // TODO:veja: Auth Persistence
-  if(auth.currentUser != null){
-    db.collection('users').doc(auth.currentUser.uid).update({'sid': null});
-    await FirebaseAuth.instance.signOut();
-  }
   runApp(App());
 }
 
