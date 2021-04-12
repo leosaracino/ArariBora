@@ -20,11 +20,9 @@ Fabio Correa
 
 [Leonardo Saracino](https://github.com/leosaracino)
 
-Sérgio Ricardo
+[Sérgio Ricardo](https://github.com/sricardov)
 
 [Tiago Lacerda](https://github.com/TiagoLacerda/) - Chefe
-
-Yuri Jaloto
 
 ## License
 
