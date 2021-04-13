@@ -78,6 +78,7 @@ class _ContactsScreenState extends State<ContactsScreen>{
                                       : NetworkImage(user.url)),
                               title: Text(
                                   user.name,
+                                  overflow: TextOverflow.fade,
                                   style: globals.buttonTextStyle),
                               onTap: () {
                                 Navigator.of(context).pop();

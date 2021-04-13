@@ -101,15 +101,17 @@ class _ConversationsScreenState extends State<ConversationsScreen>{
                                               ? null
                                               : NetworkImage(data.url)),
                                       title: Column(
-                                          crossAxisAlignment: CrossAxisAlignment
-                                              .start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                                 data.name,
+                                                overflow: TextOverflow.fade,
                                                 style: globals.buttonTextStyle),
                                             message['type'] == 'text'
                                                 ? Text(
                                                 message['contents'],
+                                                softWrap: false,
+                                                overflow: TextOverflow.fade,
                                                 style: globals
                                                     .inputHintTextStyle)
                                                 : Row(
@@ -120,6 +122,7 @@ class _ConversationsScreenState extends State<ConversationsScreen>{
                                                   SizedBox(width: 8.0),
                                                   Text(
                                                       'Imagem',
+                                                      overflow: TextOverflow.fade,
                                                       style: globals.inputHintTextStyle)])]),
                                       onTap: () {
                                         if(data.runtimeType == UserData)

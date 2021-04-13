@@ -63,8 +63,8 @@ class _SelectContactsScreenState extends State<SelectContactsScreen>{
                                       : NetworkImage(user.url)),
                               title: Text(
                                   user.name,
+                                  overflow: TextOverflow.fade,
                                   style: globals.buttonTextStyle),
-
                               tileColor: _selected.contains(user.uid) ?
                               globals.colors['lightgray'] : globals.colors['darkgray'],
                               onTap: () {

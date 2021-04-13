@@ -362,13 +362,16 @@ class _ChatScreenState extends State<ChatScreen>{
                                   ? null
                                   : NetworkImage(destinatary.url)),
                           SizedBox(width: 8),
-                          Text(
-                              destinatary.name,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.0))]))),
+                          Flexible(
+                            child: Text(
+                                destinatary.name,
+                                overflow: TextOverflow.fade,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.0)),
+                          )]))),
             actions: [
               Padding(
                   padding: EdgeInsets.only(right: 16.0),

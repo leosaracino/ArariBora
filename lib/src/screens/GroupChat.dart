@@ -348,13 +348,16 @@ class _GroupChatScreenState extends State<GroupChatScreen>{
                                         ? null
                                         : NetworkImage(group.url)),
                                 SizedBox(width: 8),
-                                Text(
-                                    group.name,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20.0))]))),
+                                Flexible(
+                                  child: Text(
+                                      group.name,
+                                      overflow: TextOverflow.fade,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.0)),
+                                )]))),
                   actions: [
                     Padding(
                         padding: EdgeInsets.only(right: 16.0),
