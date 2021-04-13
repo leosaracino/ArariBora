@@ -37,7 +37,6 @@ class _SignUpScreenState extends State<SignUpScreen>{
 
       // Create OneSignal user
       var status = await OneSignal.shared.getPermissionSubscriptionState();
-
       var position = await Geolocator.getLastKnownPosition();
       // Save user in Firebase Firestore (see globals for user structure)
       await  db.collection('users').doc(auth.currentUser.uid).set({
