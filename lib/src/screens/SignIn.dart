@@ -14,8 +14,8 @@ class SignInScreen extends StatefulWidget{
 }
 
 class _SignInScreenState extends State<SignInScreen>{
-  final emailController = TextEditingController(text: 'tiagomlbrasil@gmail.com');
-  final passwordController = TextEditingController(text: '123456');
+  final emailController = TextEditingController(text: '');
+  final passwordController = TextEditingController(text: '');
 
   /// Inicializa uma sessão de autenticação do Firebase Auth
   void signIn() async {
@@ -82,7 +82,7 @@ class _SignInScreenState extends State<SignInScreen>{
                       padding: EdgeInsets.all(32),
                       child: Column(
                           children:[
-                            SizedBox(width: 192, height: 192, child: Image(image: AssetImage('lib/assets/logo.png'))),
+                            SizedBox(width: 160, height: 160, child: Image(image: AssetImage('lib/assets/logo.png'))),
                             SizedBox(height: 32),
                             ConstrainedBox(
                                 constraints: BoxConstraints(minWidth: 100.0, minHeight: 32.0, maxHeight: 32.0),

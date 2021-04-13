@@ -5,13 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'src/screens/SignIn.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
-// TODO: Trocar o SHA-1 DEBUG para RELEASE https://developers.google.com/maps/documentation/android-sdk/get-api-key
-
 /// Inicializa o serviço OneSignal.
 Future initializeOneSignal() async {
   //Remove this method to stop OneSignal Debugging
   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
+  // Código relativo à conta no serviço OneSignal (mesmas credenciais do firebase)
   OneSignal.shared.init("8554cdb2-23c2-4e34-a575-5596297b35f3");
   //OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
   OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.none);
