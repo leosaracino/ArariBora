@@ -15,6 +15,10 @@ Instale o APK em um dispositivo Android
 
 [image_picker](https://pub.dev/packages/image_picker)
 
+[geolocator](https://pub.dev/packages/geolocator)
+
+[flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons)
+
 ## Contribuição
 [Fabio Correa](https://github.com/Fabioscpuf)
 
