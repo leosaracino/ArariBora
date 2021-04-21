@@ -63,15 +63,18 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
 
     // Store group data in Firebase Firestore and it's image in Cloud Storage
     String groupUID;
-    await db.collection("groups").add({
+    db.collection("groups").add({
       "name" : name,
       "users": FieldValue.arrayUnion(users),
     }).then((doc) async {
       groupUID = doc.id;
+      var url;
 
-      var path = st.ref().child('profile').child('groups').child(groupUID + '.jpg');
-      await path.putFile(imageFile);
-      var url = await path.getDownloadURL();
+      if(imageFile != null){
+        var path = st.ref().child('profile').child('groups').child(groupUID + '.jpg');
+        await path.putFile(imageFile);
+        url = await path.getDownloadURL();
+      }
 
       // Update group data after generating it's UID
       db.collection('groups').doc(groupUID).update({'uid': groupUID});
