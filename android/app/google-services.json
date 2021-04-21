@@ -41,6 +41,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:457511895709:android:522d3922b13cbc24488a74",
+        "android_client_info": {
+          "package_name": "dm20202verde.ic.uff.br"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "457511895709-575l4pgrse6d1aks8tfs0l4gt41udron.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dm20202verde.ic.uff.br",
+            "certificate_hash": "6bb1f0fc60130adcd7cb81e7678d87921fe35b9a"
+          }
+        },
+        {
+          "client_id": "457511895709-ph6bbpic5lf3b483i7oi2v4j67h2dvqp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0WpOjbHm_7QM0FifPnkDjSegIKBsrHc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "457511895709-ph6bbpic5lf3b483i7oi2v4j67h2dvqp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

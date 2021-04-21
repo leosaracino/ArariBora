@@ -1,4 +1,4 @@
-package br.uff.ic.dm.g03verdeuff;
+package dm20202verde.ic.uff.br;
 
 import io.flutter.embedding.android.FlutterActivity;
 
