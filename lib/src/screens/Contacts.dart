@@ -63,7 +63,6 @@ class _ContactsScreenState extends State<ContactsScreen>{
                                   "Criar grupo",
                                   style: globals.buttonTextStyle),
                               onTap: () {
-                                Navigator.of(context).pop();
                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => SelectContactsScreen()));
                               });
                         }

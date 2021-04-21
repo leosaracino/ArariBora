@@ -86,6 +86,4 @@ class _SelectContactsScreenState extends State<SelectContactsScreen>{
         floatingActionButton: FloatingActionButton(
           backgroundColor: globals.colors['blue'],
           child: Icon(Icons.arrow_forward_outlined, size: 28),
-          onPressed: () {
-          Navigator.of(context).pop();
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>CreateGroupScreen(_selected)));}));}}
+          onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) =>CreateGroupScreen(_selected))); }));}}
