@@ -18,13 +18,13 @@ Instale o APK em um dispositivo Android
 ## Contribuição
 [Fabio Correa](https://github.com/Fabioscpuf)
 
-[Gabriela Pinheiro](https://github.com/GabrielaPC) - Vice-Chefe
+[Gabriela Pinheiro](https://github.com/GabrielaPC)
 
 [Leonardo Saracino](https://github.com/leosaracino)
 
 [Sérgio Ricardo](https://github.com/sricardov)
 
-[Tiago Lacerda](https://github.com/TiagoLacerda/) - Chefe
+[Tiago Lacerda](https://github.com/TiagoLacerda/)
 
 ## License
 
